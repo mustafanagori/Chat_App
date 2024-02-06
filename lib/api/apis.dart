@@ -30,6 +30,14 @@ class APIs {
         print("THe token of device $t");
       }
     });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Go a MEssage wlisht in the foreground');
+      print('Message Data: ${message.data}');
+      if (message.notification != null) {
+        print('Message also Contaoned a notiifaction ${message.notification}');
+      }
+    });
   }
 
   // update token of user
@@ -73,7 +81,9 @@ class APIs {
         "notification": {
           "title": chatUser.name,
           "body": msg,
-        }
+          "android_channel_id": "chats",
+        },
+        "date": {"some_data": "User ID: ${me.id}"}
       };
 
       var url = Uri.parse('https://fcm.googleapis.com/fcm/send');

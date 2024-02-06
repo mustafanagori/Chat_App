@@ -48,44 +48,39 @@ class _ChatUserCardState extends State<ChatUserCard> {
                 data?.map((e) => Message.fromJson(e.data())).toList() ?? [];
             if (list.isNotEmpty) _message = list[0];
             return ListTile(
-                // leading: const CircleAvatar(
-                //   child: Icon(
-                //     CupertinoIcons.person,
-                //     size: 25,
-                //   ),
-                // ),
-
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(mq.height * 0.03),
-                  child: CachedNetworkImage(
-                    height: mq.height * .05,
-                    width: mq.width * .11,
-                    fit: BoxFit.cover,
-                    imageUrl: widget.user.image,
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(mq.height * 0.03),
+                child: CachedNetworkImage(
+                  height: mq.height * .05,
+                  width: mq.width * .11,
+                  fit: BoxFit.cover,
+                  imageUrl: widget.user.image,
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                title: Text(
-                  widget.user.name,
-                ),
-                subtitle: Text(
-                  _message != null ? _message!.msg : widget.user.about,
-                  maxLines: 1,
-                ),
-                trailing: _message == null
-                    ? null
-                    : _message!.read.isEmpty &&
-                            _message!.fromId != APIs.user.uid
-                        ? Container(
-                            width: 15,
-                            height: 15,
-                            decoration: BoxDecoration(
-                                color: Colors.green.shade500,
-                                borderRadius: BorderRadius.circular(10)),
-                          )
-                        : Text(_message!.sent,
-                            style: TextStyle(color: Colors.black54)));
+              ),
+              title: Text(
+                widget.user.name,
+              ),
+              subtitle: Text(
+                _message != null ? _message!.msg : widget.user.about,
+                maxLines: 1,
+              ),
+              trailing: _message == null
+                  ? null
+                  : _message!.read.isEmpty && _message!.fromId != APIs.user.uid
+                      ? Container(
+                          width: 15,
+                          height: 15,
+                          decoration: BoxDecoration(
+                            color: Colors.green.shade500,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        )
+                      : Text(
+                          _message!.sent,
+                          style: const TextStyle(color: Colors.black54),
+                        ),
+            );
           },
         ),
       ),
