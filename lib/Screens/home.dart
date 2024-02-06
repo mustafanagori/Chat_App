@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:we_chat/Screens/login.dart';
 import 'package:we_chat/Screens/profile.dart';
 import 'package:we_chat/api/apis.dart';
 import 'package:we_chat/model/user.dart';
@@ -28,6 +26,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var mq = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
@@ -45,16 +44,11 @@ class _HomeState extends State<Home> {
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
-                if (list.isNotEmpty) {
-                  // Check if the list is not empty
-                  Get.to(
-                    Profile(
-                      user: APIs.me, // Accessing the first element of the list
-                    ),
-                  );
-                } else {
-                  print("list is empty");
-                }
+                Get.to(
+                  Profile(
+                    user: APIs.me,
+                  ),
+                );
               },
               icon: const Icon(
                 CupertinoIcons.profile_circled,
@@ -160,25 +154,6 @@ class _HomeState extends State<Home> {
                   }
               }
             },
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.deepPurple,
-            onPressed: () async {
-              const Center(child: CircularProgressIndicator());
-              await APIs.auth.signOut().then((value) async {
-                await GoogleSignIn().signOut().then((value) {
-                  //hide circular indicator
-                  Get.back();
-                  // hide home
-                  Get.back();
-                  Get.to(const LoginScreen());
-                });
-              });
-            },
-            child: const Icon(
-              CupertinoIcons.square_arrow_right_fill,
-              color: Colors.white,
-            ),
           ),
         ),
       ),
