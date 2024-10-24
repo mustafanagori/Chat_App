@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:we_chat/model/message.dart';
 import 'package:we_chat/model/user.dart';
@@ -17,10 +18,8 @@ class APIs {
   static User get user => auth.currentUser!;
   static FirebaseAuth auth = FirebaseAuth.instance;
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   // for push notification
   static FirebaseMessaging fmMessanging = FirebaseMessaging.instance;
-
   // get fireabse messanging toke in flutter
   static Future<void> getFireabaseMessagingToken() async {
     await fmMessanging.requestPermission();
@@ -30,12 +29,14 @@ class APIs {
         print("THe token of device $t");
       }
     });
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Go a MEssage wlisht in the foreground');
       print('Message Data: ${message.data}');
       if (message.notification != null) {
-        print('Message also Contaoned a notiifaction ${message.notification}');
+        if (kDebugMode) {
+          print(
+              'Message also Contained a notiifaction ${message.notification}');
+        }
       }
     });
   }
@@ -53,17 +54,17 @@ class APIs {
         .collection('user')
         .doc(user.uid)
         .get()
-        .then((user) async => {
+        .then((user) async {
               if (user.exists)
                 {
-                  me = ChatUser.fromJson(user.data()!),
-                  await getFireabaseMessagingToken(),
-                  print("my data ${user.data()}")
+                  me = ChatUser.fromJson(user.data()!);
+                  await getFireabaseMessagingToken();
+                  print("my data ${user.data()}");
                 }
               else
                 {
-                  await createUser().then((value) => getselfInfo()),
-                }
+                  await createUser().then((value) => getselfInfo());
+                };
             });
   }
 

@@ -74,8 +74,8 @@ class _MessageCardState extends State<MessageCard> {
         child: Card(
           elevation: 1,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          color: Color(0xffdcf9c6),
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          color: const Color(0xffdcf9c6),
           child: Stack(
             children: [
               Padding(
@@ -83,7 +83,7 @@ class _MessageCardState extends State<MessageCard> {
                     left: 5, right: 65, bottom: 20, top: 10),
                 child: Text(
                   widget.message.msg,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),

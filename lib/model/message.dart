@@ -23,7 +23,6 @@ class Message {
     fromId = json['fromId'].toString();
     type = json['type'].toString() == Type.image.name ? Type.image : Type.text;
   }
-
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['toId'] = toId;

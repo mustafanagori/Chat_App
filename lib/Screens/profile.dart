@@ -87,6 +87,7 @@ class _ProfileState extends State<Profile> {
                                     const Icon(Icons.error),
                               ),
                             ),
+
                       Positioned(
                         bottom: 0,
                         right: -18,
